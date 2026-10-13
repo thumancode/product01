@@ -1,38 +1,18 @@
-# মোশন গ্রাফিক্স ভিডিও কিট (GitHub Actions)
+# Mukhallat Al Emirates — Ellens Fragrance promo video
 
-এই কিট দিয়ে শুধু মোবাইল ব্রাউজার থেকে GitHub ব্যবহার করে ফেসবুক রিলস (1080x1920) সাইজের প্রোডাক্ট ভিডিও বানানো যাবে। কম্পিউটার বা কোনো সফটওয়্যার লাগবে না, সব কাজ GitHub-এর সার্ভারে হয়।
+HTML/CSS/JS animation → Playwright frames → FFmpeg → `product-video.mp4` (1080x1920, 30 fps, 61 s).
 
-## ফোল্ডারে কী কী আছে
-- `input/product.jpg` : প্রোডাক্টের ছবি
-- `input/voiceover.mp3` : আপনার ভয়েস
-- `input/subtitles.srt` : সাবটাইটেল
-- `input/music.mp3` : (ঐচ্ছিক) ব্যাকগ্রাউন্ড মিউজিক। এই নামে আপলোড করলেই যোগ হবে, ভয়েস চলার সময় মিউজিক নিজে থেকে কমে যাবে।
-- `config.json` : ব্র্যান্ড নাম, ওয়েবসাইট, প্রতিটি অংশের শিরোনাম ও নোট লিস্ট
-- `scripts/render.py` : ভিডিও বানানোর কোড
-- `.github/workflows/render.yml` : GitHub Actions সেটিং
+## কীভাবে চালাবেন
+1. GitHub-এ নতুন repository বানিয়ে **সব ফাইল** আপলোড করুন (`.github/workflows/render.yml` ঠিক এই path-এ থাকতে হবে)।
+2. **Actions** ট্যাব → **Render product video** → **Run workflow**। (আগে `test_seconds` = `10` দিয়ে ছোট টেস্ট করতে পারেন।)
+3. রান শেষ হলে run পেজের **Artifacts** থেকে `product-video` ডাউনলোড করুন।
 
-## মোবাইল থেকে ধাপে ধাপে
-1. GitHub-এ নতুন repository খুলুন (Public বা Private দুটোই চলবে)।
-2. **Add file > Upload files** চাপুন, এই কিটের সব ফাইল ও ফোল্ডার আপলোড করুন।
-   - মোবাইল থেকে `.github` ফোল্ডার আপলোড না হলে: **Add file > Create new file** চাপুন, নামের ঘরে লিখুন `.github/workflows/render.yml`, তারপর `render.yml` ফাইলের লেখা কপি করে পেস্ট করে **Commit** করুন।
-3. **Actions** ট্যাবে যান, **Render Video** বাছাই করে **Run workflow** চাপুন। (input বা config পরিবর্তন করলে নিজে থেকেও চালু হবে।)
-4. ৫ থেকে ১৫ মিনিট পর সবুজ টিক আসবে। সেটাতে ঢুকে নিচে **Artifacts > rendered-video** ডাউনলোড করুন। এটা zip ফাইল, খুললে ভিতরে mp4 ভিডিও পাবেন।
+## ফাইল
+index.html, style.css, art.js, scenes.js, lines.js, render.js, package.json, timestamps.txt,
+transcript_1_.txt, voiceover.mp3, product.jpg, `.github/workflows/render.yml`
 
-## নতুন প্রোডাক্টের ভিডিও বানাতে
-- `input` ফোল্ডারের তিনটি ফাইল একই নামে বদলে দিন।
-- `config.json` এ `product_name`, `website`, এবং `scenes` এর সময় (সেকেন্ডে), `title`, `items` বদলান।
-- সাবটাইটেলের মোট সময় ভয়েসের চেয়ে বেশি হলে কোড নিজে থেকে সময় মিলিয়ে নেয় (`auto_fit_subtitles_to_voice`)।
-
-## ভিডিওতে যা থাকবে
-- গাঢ় সোনালি থিম, আরবি স্টাইলের জ্যামিতিক নকশা, ঘুরতে থাকা আলোর রশ্মি, ভাসমান সোনালি কণা
-- সোনালি ফ্রেমে প্রোডাক্টের ছবি, হালকা ভাসা ও প্রতিটি নতুন অংশে "পাঞ্চ" জুম
-- প্রতিটি অংশে অ্যানিমেটেড শিরোনাম ও নোটের চিপস (Top / Heart / Base Notes ইত্যাদি)
-- নিচে বাংলা সাবটাইটেল, শেষে ওয়েবসাইটের পালস বাটন
-- সাউন্ড ইফেক্ট কোড দিয়েই তৈরি: শুরুতে হুক ইমপ্যাক্ট + ঝিকিমিকি, রিভিলের আগে রাইজার, প্রতিটি অংশে হুশ, প্রতিটি চিপে পপ
-- কোনো ইমোজি নেই, সব নকশা ভেক্টর
-
-## শব্দের মাত্রা (config.json)
-`voice_volume`, `music_volume`, `sfx_volume` বাড়িয়ে কমিয়ে ঠিক করুন।
-
-## নিজের ফন্ট
-রিপোতে `fonts` নামে ফোল্ডার বানিয়ে .ttf ফাইল রাখলে সেটা ব্যবহার হবে (config এর স্টাইলে ফন্টের নাম মিলাতে হবে)। না রাখলে Noto Sans Bengali ব্যবহার হবে।
+## সময় বা টেক্সট বদলাতে
+- `timestamps.txt` এডিট করুন (`start | end | text | tag`, সেকেন্ডে)। `lines.js` রেন্ডারের সময় নিজে তৈরি হয়।
+- সাবটাইটেল সরাসরি `timestamps.txt` থেকে আসে। দৃশ্যের চিপ/আইকনের সময় লাইনের শব্দ অনুযায়ী হিসাব হয় (লাইনের ক্রম `scenes.js`-এ index দিয়ে ধরা), তাই লাইন যোগ/বাদ দিলে `scenes.js`-এর `wt(লাইন, শব্দ)` index মিলিয়ে নিন।
+- একই start সময়ের দুই লাইন (০:৪৩) থাকলে `render.js` প্রথমটি অন্তত ০.৭ সেকেন্ড দেখায়, পরেরটির সাবটাইটেল সেই পরিমাণ পরে শুরু হয়।
+- স্থিরচিত্র দেখতে লোকালি: `node render.js --still 5,30,58`

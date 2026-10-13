@@ -1,0 +1,12 @@
+{
+  "name": "ellens-fragrance-product-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mukhallat Al Emirates promo video: HTML animation -> Playwright frames -> FFmpeg",
+  "scripts": {
+    "render": "node render.js"
+  },
+  "dependencies": {
+    "playwright": "^1.64.0"
+  }
+}
