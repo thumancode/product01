@@ -1,44 +1,42 @@
-name: Render product video
+name: Render Video
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - 'product.jpg'
-      - 'voiceover.mp3'
-      - 'subtitles_source.txt'
-      - 'subtitles.srt'
-      - 'brand.json'
-      - 'music.mp3'
-      - 'sfx_hook.wav'
-      - 'sfx_whoosh.wav'
-      - 'render.py'
-      - '.github/workflows/render.yml'
-
-permissions:
-  contents: read
+      - "input/**"
+      - "config.json"
+      - "scripts/**"
 
 jobs:
   render:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
     steps:
-      - name: Checkout repository
+      - name: Get files
         uses: actions/checkout@v4
 
-      - name: Install FFmpeg and Bengali fonts
+      - name: Install ffmpeg and Bangla fonts
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-noto-core fonts-noto-extra
+          sudo apt-get install -y ffmpeg fonts-noto-core fontconfig
           fc-cache -f
+          ffmpeg -version | head -1
 
-      - name: Render MP4
-        run: python3 render.py
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
-      - name: Upload rendered video
+      - name: Install Python packages
+        run: pip install pillow numpy
+
+      - name: Render video
+        run: python scripts/render.py
+
+      - name: Upload video
         uses: actions/upload-artifact@v4
         with:
-          name: mukhallat-product-video
-          path: mukhallat-product-video.mp4
-          if-no-files-found: error
-          retention-days: 7
+          name: rendered-video
+          path: output/*.mp4
+          retention-days: 14
