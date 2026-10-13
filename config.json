@@ -1,0 +1,36 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "output_name": "mukhallat-al-emirates.mp4",
+
+  "brand_name": "ELLENS FRAGRANCE",
+  "product_name": "Mukhallat Al Emirates",
+  "product_subtitle": "PREMIUM PERFUME OIL",
+  "show_product_name_from": 5,
+  "website": "www.your-website.com",
+
+  "auto_fit_subtitles_to_voice": true,
+  "music_volume": 0.22,
+  "sfx_volume": 0.9,
+  "voice_volume": 1.0,
+
+  "colors": {
+    "gold": "D4AF37",
+    "cream": "F3E5C3",
+    "dark": "140D08"
+  },
+
+  "scenes": [
+    { "start": 0,  "end": 5,  "type": "intro", "title": "RIZWAN TALKS", "sfx": ["impact", "shimmer"] },
+    { "start": 5,  "end": 11, "type": "reveal", "title": "মুখাল্লাত আল আমিরাত", "riser_before": true, "sfx": ["impact", "shimmer"] },
+    { "start": 11, "end": 16, "type": "info", "title": "মুখাল্লাত কী?", "items": ["ট্রেডিশনাল অ্যারাবিয়ান আর্ট", "প্রিসিয়াস অ্যাকোর্ড ব্লেন্ড"], "sfx": ["whoosh"] },
+    { "start": 16, "end": 23, "type": "list", "title": "ক্যারেক্টার", "items": ["রিচ", "রিগাল", "থিক", "ওয়ার্ম", "লং-লাস্টিং", "ইউনিসেক্স"], "sfx": ["whoosh"] },
+    { "start": 23, "end": 29, "type": "list", "title": "TOP NOTES", "items": ["লেমন", "বার্গামট", "হার্বাল নোটস", "ওয়ার্ম স্পাইসেস"], "sfx": ["whoosh"] },
+    { "start": 29, "end": 36, "type": "list", "title": "HEART NOTES", "items": ["তায়েফ রোজ", "সিনামন", "ল্যাভেন্ডার", "গ্যালবানাম"], "sfx": ["whoosh"] },
+    { "start": 36, "end": 44, "type": "list", "title": "BASE NOTES", "items": ["দেহেন আল উদ", "অ্যাম্বার", "হোয়াইট মাস্ক", "স্যান্ডেলউড", "ভ্যানিলা", "চকোলেট"], "sfx": ["whoosh"] },
+    { "start": 44, "end": 51, "type": "list", "title": "SCENT FAMILY", "items": ["ওরিয়েন্টাল", "উদ", "ফ্লোরাল", "স্পাইসি", "উডি"], "sfx": ["whoosh"] },
+    { "start": 51, "end": 63, "type": "list", "title": "PERFECT FOR", "items": ["ফরমাল অকেশন", "ইভিনিং ওয়্যার", "স্পেশাল ইভেন্ট", "ট্রেডিশনাল গ্যাদারিং", "উইন্টার", "উদ লাভার্স"], "sfx": ["whoosh"] },
+    { "start": 63, "end": 67, "type": "cta", "title": "আজই অর্ডার করুন", "sfx": ["impact", "shimmer"] }
+  ]
+}

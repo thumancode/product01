@@ -1,28 +1,38 @@
-# Mukhallat Al Emirates — Automated Product Video
+# মোশন গ্রাফিক্স ভিডিও কিট (GitHub Actions)
 
-বাংলা ভয়েসওভার ও প্রোডাক্ট ছবির ভিত্তিতে 9:16 vertical MP4 ভিডিও বানানোর GitHub Actions workflow। লোকালি কিছু ইনস্টল বা রেন্ডার করতে হবে না।
+এই কিট দিয়ে শুধু মোবাইল ব্রাউজার থেকে GitHub ব্যবহার করে ফেসবুক রিলস (1080x1920) সাইজের প্রোডাক্ট ভিডিও বানানো যাবে। কম্পিউটার বা কোনো সফটওয়্যার লাগবে না, সব কাজ GitHub-এর সার্ভারে হয়।
 
-## কীভাবে ব্যবহার করবেন (মোবাইল ব্রাউজার থেকেও)
+## ফোল্ডারে কী কী আছে
+- `input/product.jpg` : প্রোডাক্টের ছবি
+- `input/voiceover.mp3` : আপনার ভয়েস
+- `input/subtitles.srt` : সাবটাইটেল
+- `input/music.mp3` : (ঐচ্ছিক) ব্যাকগ্রাউন্ড মিউজিক। এই নামে আপলোড করলেই যোগ হবে, ভয়েস চলার সময় মিউজিক নিজে থেকে কমে যাবে।
+- `config.json` : ব্র্যান্ড নাম, ওয়েবসাইট, প্রতিটি অংশের শিরোনাম ও নোট লিস্ট
+- `scripts/render.py` : ভিডিও বানানোর কোড
+- `.github/workflows/render.yml` : GitHub Actions সেটিং
 
-1. GitHub-এ নতুন **public বা private repository** তৈরি করুন।
-2. এই ZIP-এর ভেতরের ফাইলগুলো repository-র root-এ upload/extract করুন। GitHub ওয়েব UI-তে ZIP upload করলে ZIP-টি নিজে থেকে extract হয় না—তাই ZIP-এর ভেতরের ফাইলগুলো upload করুন।
-3. `product.jpg`-এ প্রোডাক্ট ছবি, `voiceover.mp3`-এ ভয়েসওভার এবং `subtitles_source.txt`-এ সময়সহ subtitle source রাখুন।
-4. ঐচ্ছিক: `music.mp3` নামে background music যোগ করুন। `sfx_hook.wav` এবং `sfx_whoosh.wav` দিলে সেগুলো ব্যবহার হবে; না থাকলে script নিজে lightweight synthetic sound effects বানাবে।
-5. GitHub repository-তে **Actions** tab খুলুন, `Render product video` workflow নির্বাচন করে **Run workflow** চাপুন।
-6. Workflow শেষ হলে run-এর নিচের **Artifacts** থেকে `mukhallat-product-video` ডাউনলোড করে ZIP খুলুন। MP4 ফাইলটি পাবেন।
+## মোবাইল থেকে ধাপে ধাপে
+1. GitHub-এ নতুন repository খুলুন (Public বা Private দুটোই চলবে)।
+2. **Add file > Upload files** চাপুন, এই কিটের সব ফাইল ও ফোল্ডার আপলোড করুন।
+   - মোবাইল থেকে `.github` ফোল্ডার আপলোড না হলে: **Add file > Create new file** চাপুন, নামের ঘরে লিখুন `.github/workflows/render.yml`, তারপর `render.yml` ফাইলের লেখা কপি করে পেস্ট করে **Commit** করুন।
+3. **Actions** ট্যাবে যান, **Render Video** বাছাই করে **Run workflow** চাপুন। (input বা config পরিবর্তন করলে নিজে থেকেও চালু হবে।)
+4. ৫ থেকে ১৫ মিনিট পর সবুজ টিক আসবে। সেটাতে ঢুকে নিচে **Artifacts > rendered-video** ডাউনলোড করুন। এটা zip ফাইল, খুললে ভিতরে mp4 ভিডিও পাবেন।
 
-## ফাইল ও কাস্টমাইজেশন
+## নতুন প্রোডাক্টের ভিডিও বানাতে
+- `input` ফোল্ডারের তিনটি ফাইল একই নামে বদলে দিন।
+- `config.json` এ `product_name`, `website`, এবং `scenes` এর সময় (সেকেন্ডে), `title`, `items` বদলান।
+- সাবটাইটেলের মোট সময় ভয়েসের চেয়ে বেশি হলে কোড নিজে থেকে সময় মিলিয়ে নেয় (`auto_fit_subtitles_to_voice`)।
 
-- `render.py` — FFmpeg render pipeline.
-- `.github/workflows/render.yml` — GitHub-hosted runner-এ render job.
-- `subtitles_source.txt` — timestamp-সহ SRT-ধাঁচের subtitle source. এটি `.txt` হলেও SRT timestamp format-এ।
-- `subtitles.srt` দিলে সেটি source text-এর বদলে ব্যবহার হবে।
-- `brand.json` — brand name, product title, CTA ও রঙ পরিবর্তনের জায়গা।
+## ভিডিওতে যা থাকবে
+- গাঢ় সোনালি থিম, আরবি স্টাইলের জ্যামিতিক নকশা, ঘুরতে থাকা আলোর রশ্মি, ভাসমান সোনালি কণা
+- সোনালি ফ্রেমে প্রোডাক্টের ছবি, হালকা ভাসা ও প্রতিটি নতুন অংশে "পাঞ্চ" জুম
+- প্রতিটি অংশে অ্যানিমেটেড শিরোনাম ও নোটের চিপস (Top / Heart / Base Notes ইত্যাদি)
+- নিচে বাংলা সাবটাইটেল, শেষে ওয়েবসাইটের পালস বাটন
+- সাউন্ড ইফেক্ট কোড দিয়েই তৈরি: শুরুতে হুক ইমপ্যাক্ট + ঝিকিমিকি, রিভিলের আগে রাইজার, প্রতিটি অংশে হুশ, প্রতিটি চিপে পপ
+- কোনো ইমোজি নেই, সব নকশা ভেক্টর
 
-## গুরুত্বপূর্ণ
+## শব্দের মাত্রা (config.json)
+`voice_volume`, `music_volume`, `sfx_volume` বাড়িয়ে কমিয়ে ঠিক করুন।
 
-- আপনার দেওয়া অডিও প্রায় 60.4 সেকেন্ড, আর timestamp text-এর শেষ সময় 67 সেকেন্ড। রেন্ডারার subtitle timestamp-গুলো অডিওর দৈর্ঘ্যের সঙ্গে স্বয়ংক্রিয়ভাবে scale করে, যাতে শেষের caption অডিওর বাইরে না যায়।
-- আউটপুট: 1080×1920, 30 fps, H.264 MP4, AAC audio.
-- GitHub Actions-এর free usage/limits account ও repository settings অনুযায়ী বদলাতে পারে।
-- ওয়েবসাইটের URL `brand.json`-এ যোগ করলে CTA-তে দেখাবে।
-- আপনার পণ্য-সম্পর্কিত দাবিগুলো আপনার দেওয়া narration থেকেই এসেছে; স্ক্রিপ্ট নতুন fragrance claims তৈরি করে না।
+## নিজের ফন্ট
+রিপোতে `fonts` নামে ফোল্ডার বানিয়ে .ttf ফাইল রাখলে সেটা ব্যবহার হবে (config এর স্টাইলে ফন্টের নাম মিলাতে হবে)। না রাখলে Noto Sans Bengali ব্যবহার হবে।
