@@ -1,0 +1,11 @@
+output/\n__pycache__/\n
+# Generated files
+mukhallat-product-video.mp4
+captions_rendered.srt
+brand.txt
+product.txt
+subtitle.txt
+cta.txt
+website.txt
+sfx_hook.wav
+sfx_whoosh.wav
