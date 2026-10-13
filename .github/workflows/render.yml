@@ -1,42 +1,61 @@
-name: Render Video
+name: Render product video
 
+# Actions tab → "Render product video" → Run workflow
+# When it finishes, download the "product-video" zip from the Artifacts section of the run page.
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - "input/**"
-      - "config.json"
-      - "scripts/**"
+    inputs:
+      test_seconds:
+        description: "Test only: render the first N seconds (leave empty for the full video)"
+        required: false
+        default: ""
+      workers:
+        description: "Parallel browsers (empty = auto)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
 
 jobs:
   render:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
-      - name: Get files
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install ffmpeg and Bangla fonts
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install FFmpeg and fonts
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-noto-core fontconfig
+          sudo apt-get install -y ffmpeg fonts-noto-core fonts-hosny-amiri fonts-freefont-ttf fonts-dejavu-core
           fc-cache -f
-          ffmpeg -version | head -1
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install Python packages
-        run: pip install pillow numpy
+      - name: Install dependencies
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
 
       - name: Render video
-        run: python scripts/render.py
+        env:
+          TEST_SECONDS: ${{ github.event.inputs.test_seconds }}
+          WORKERS: ${{ github.event.inputs.workers }}
+        run: |
+          ARGS=""
+          if [ -n "$TEST_SECONDS" ]; then ARGS="$ARGS --test $TEST_SECONDS"; fi
+          if [ -n "$WORKERS" ]; then ARGS="$ARGS --workers $WORKERS"; fi
+          node render.js $ARGS
 
       - name: Upload video
         uses: actions/upload-artifact@v4
         with:
-          name: rendered-video
-          path: output/*.mp4
-          retention-days: 14
+          name: product-video
+          path: product-video.mp4
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
